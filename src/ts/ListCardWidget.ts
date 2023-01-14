@@ -21,7 +21,7 @@ export default class ListCardWidget {
 		this.widget = document.createElement('div');
 		this.widget.classList.add('col');
 		this.container.insertAdjacentElement(
-			'afterbegin',
+			'beforeend',
 			this.widget
 		);
 	}

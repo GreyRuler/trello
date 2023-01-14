@@ -140,6 +140,16 @@ export default class CardFormWidget {
 					moveAt(event.clientX, event.clientY);
 				};
 
+				const onMouseUp = () => {
+					const oldPlug = document.getElementById('plug');
+					oldPlug?.replaceWith(card);
+					card.classList.remove('dragged', 'm-0');
+					document.removeEventListener('mousemove', onMouseMove);
+					document.removeEventListener('mouseup', onMouseUp);
+					card.onmouseup = null;
+					card.removeAttribute('style');
+				};
+
 				card.addEventListener('mousedown', (e) => {
 					e.preventDefault();
 
@@ -149,15 +159,7 @@ export default class CardFormWidget {
 					moveAt(e.clientX, e.clientY);
 
 					document.addEventListener('mousemove', onMouseMove);
-				});
-
-				document.addEventListener('mouseup', () => {
-					const oldPlug = document.getElementById('plug');
-					oldPlug?.replaceWith(card);
-					card.classList.remove('dragged', 'm-0');
-					document.removeEventListener('mousemove', onMouseMove);
-					card.onmouseup = null;
-					card.removeAttribute('style');
+					document.addEventListener('mouseup', onMouseUp);
 				});
 			}
 		};
