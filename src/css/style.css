@@ -1,0 +1,30 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#app {
+	position: relative;
+	display: flex;
+}
+
+.card {
+	position: static;
+	margin: 10px;
+}
+
+.card-item {
+	margin: 10px 0;
+	padding: 0 0.75rem;
+}
+
+.card-item.dragged {
+	position: absolute;
+	z-index: 999;
+	pointer-events: none;
+}
+
+#plug {
+	margin: 10px 0 !important;
+}
