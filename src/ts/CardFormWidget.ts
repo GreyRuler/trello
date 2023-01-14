@@ -79,6 +79,7 @@ export default class CardFormWidget {
 		cardFormWidget?.remove();
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	addCardEvent(cards: HTMLElement, inputField: HTMLTextAreaElement) {
 		return () => {
 			if (inputField.value !== '') {
