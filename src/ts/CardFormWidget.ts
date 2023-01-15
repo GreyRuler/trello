@@ -1,3 +1,6 @@
+import Storage from './Storage';
+import Card from './Card';
+
 export default class CardFormWidget {
 	static get markup() {
 		return `
@@ -56,7 +59,7 @@ export default class CardFormWidget {
 
 		buttonAddCardToWidget?.addEventListener(
 			'click',
-			this.addCardEvent.call(null, cards, inputField)
+			this.addCardEvent.call(this, cards, inputField)
 		);
 
 		buttonCloseCardToWidget
@@ -80,87 +83,12 @@ export default class CardFormWidget {
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	addCardEvent(cards: HTMLElement, inputField: HTMLTextAreaElement) {
+	addCardEvent(cards: HTMLElement, inputField: HTMLTextAreaElement | null) {
 		return () => {
-			if (inputField.value !== '') {
-				const card = document.createElement('div');
-				card.classList.add('card-item', 'card');
-				card.innerText = inputField.value;
+			if (inputField) {
+				Card.addCard(cards, inputField.value);
+				Storage.save();
 				inputField.value = '';
-
-				cards.insertAdjacentElement(
-					'beforeend',
-					card
-				);
-
-				const moveAt = (clientX: number, clientY: number) => {
-					card.style.left = `${clientX - card.offsetWidth / 2}px`;
-					card.style.top = `${clientY - card.offsetHeight / 2}px`;
-				};
-
-				const onMouseMove = (event: MouseEvent) => {
-					const mouseUpItem = event.target as HTMLElement;
-					const oldPlug = document.getElementById('plug');
-
-					const currentCard = mouseUpItem.closest('.card.up');
-
-					const plug = document.createElement('div');
-					plug.id = 'plug';
-					plug.classList.add('card');
-					plug.style.height = `${card.offsetHeight}px`;
-					if (currentCard) {
-						if (mouseUpItem.classList.contains('card-item')) {
-							oldPlug?.remove();
-							if (card.offsetHeight / 2 > event.offsetY) {
-								// top
-								mouseUpItem.insertAdjacentElement(
-									'beforebegin',
-									plug
-								);
-							} else {
-								// bottom
-								mouseUpItem.insertAdjacentElement(
-									'afterend',
-									plug
-								);
-							}
-						} else if (!currentCard.querySelector('#plug')) {
-							oldPlug?.remove();
-							mouseUpItem
-								?.closest('.card-body')
-								?.querySelector('#cards')
-								?.insertAdjacentElement(
-									'beforeend',
-									plug
-								);
-						}
-					} else {
-						oldPlug?.remove();
-					}
-					moveAt(event.clientX, event.clientY);
-				};
-
-				const onMouseUp = () => {
-					const oldPlug = document.getElementById('plug');
-					oldPlug?.replaceWith(card);
-					card.classList.remove('dragged', 'm-0');
-					document.removeEventListener('mousemove', onMouseMove);
-					document.removeEventListener('mouseup', onMouseUp);
-					card.onmouseup = null;
-					card.removeAttribute('style');
-				};
-
-				card.addEventListener('mousedown', (e) => {
-					e.preventDefault();
-
-					card.style.width = `${card.offsetWidth}px`;
-					card.classList.add('dragged', 'm-0');
-
-					moveAt(e.clientX, e.clientY);
-
-					document.addEventListener('mousemove', onMouseMove);
-					document.addEventListener('mouseup', onMouseUp);
-				});
 			}
 		};
 	}

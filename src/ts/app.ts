@@ -1,4 +1,5 @@
 import ListCardWidget from './ListCardWidget';
+import Storage from './Storage';
 
 const app = document.querySelector('#app') as HTMLElement;
 
@@ -9,3 +10,5 @@ const webApp3 = new ListCardWidget(app);
 webApp1.bindToDOM('TODO');
 webApp2.bindToDOM('IN PROGRESS');
 webApp3.bindToDOM('DONE');
+
+Storage.load();
