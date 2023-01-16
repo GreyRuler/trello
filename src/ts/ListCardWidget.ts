@@ -9,8 +9,6 @@ export default class ListCardWidget {
 
 	private cards: HTMLElement | null = null;
 
-	private cardFormWidget: CardFormWidget | null = null;
-
 	private listCardWidget: HTMLElement | null = null;
 
 	private cardTitle: HTMLElement | null = null;
@@ -66,11 +64,10 @@ export default class ListCardWidget {
 		this.listCardWidget = this.widget.querySelector(
 			ListCardWidget.selectorListCardWidget
 		);
-		this.cardFormWidget = new CardFormWidget();
 
 		this.buttonAddCard?.addEventListener('click', () => {
 			if (this.listCardWidget && this.buttonAddCard && this.cards) {
-				this.cardFormWidget?.showCardFormWidget(
+				CardFormWidget.showCardFormWidget(
 					this.listCardWidget,
 					this.cards,
 					this.buttonAddCard

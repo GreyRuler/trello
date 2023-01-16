@@ -29,7 +29,8 @@ export default class Storage {
 				storage[index] = Array.from(cardItems).reduce(
 					// eslint-disable-next-line func-names
 					function (accumulator: Array<string>, currentValue: Element) {
-						accumulator.push((currentValue as HTMLElement).innerText);
+						const contentCard = currentValue.querySelector('.content-card') as HTMLElement;
+						accumulator.push(contentCard.innerText);
 						return accumulator;
 					},
 					[]

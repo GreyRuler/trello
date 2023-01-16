@@ -4,13 +4,32 @@ import Storage from './Storage';
 export default class Card {
 	static addCard(cards: HTMLElement, content: string) {
 		const card = document.createElement('div');
-		card.classList.add('card-item', 'card');
-		card.innerText = content;
+		const contentCard = document.createElement('div');
+		const btnCloseCard = document.createElement('div');
+
+		card.classList.add('card-item', 'card', 'flex-row', 'justify-content-between');
+		btnCloseCard.classList.add('btn', 'btn-close');
+		contentCard.classList.add('content-card');
+		contentCard.innerText = content;
+
+		card.insertAdjacentElement(
+			'beforeend',
+			contentCard
+		);
+		card.insertAdjacentElement(
+			'beforeend',
+			btnCloseCard
+		);
 
 		cards.insertAdjacentElement(
 			'beforeend',
 			card
 		);
+
+		btnCloseCard.addEventListener('click', () => {
+			card.remove();
+			Storage.save();
+		});
 
 		const moveAt = (clientX: number, clientY: number) => {
 			card.style.left = `${clientX - card.offsetWidth / 2}px`;
@@ -71,15 +90,17 @@ export default class Card {
 		};
 
 		card.addEventListener('mousedown', (e) => {
-			e.preventDefault();
+			if (!(e.target as HTMLElement).classList.contains('btn-close')) {
+				e.preventDefault();
 
-			card.style.width = `${card.offsetWidth}px`;
-			card.classList.add('dragged', 'm-0');
+				card.style.width = `${card.offsetWidth}px`;
+				card.classList.add('dragged', 'm-0');
 
-			moveAt(e.clientX, e.clientY);
+				moveAt(e.clientX, e.clientY);
 
-			document.addEventListener('mousemove', onMouseMove);
-			document.addEventListener('mouseup', onMouseUp);
+				document.addEventListener('mousemove', onMouseMove);
+				document.addEventListener('mouseup', onMouseUp);
+			}
 		});
 	}
 }

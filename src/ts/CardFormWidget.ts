@@ -14,7 +14,7 @@ export default class CardFormWidget {
 						Add card
 				</button>
 				<div id="button-close-cardFormWidget"
-				 	 class="btn btn-close"></div>
+				 	 class="btn btn-close justify-content-between"></div>
 			</div>
 		</div>`;
 	}
@@ -35,7 +35,7 @@ export default class CardFormWidget {
 		return '#input-field';
 	}
 
-	showCardFormWidget(
+	static showCardFormWidget(
 		listCardWidget: HTMLElement,
 		cards: HTMLElement,
 		buttonAddCard: HTMLButtonElement
@@ -59,7 +59,7 @@ export default class CardFormWidget {
 
 		buttonAddCardToWidget?.addEventListener(
 			'click',
-			this.addCardEvent.call(this, cards, inputField)
+			this.addCardEvent.call(this, listCardWidget, buttonAddCard, cards, inputField)
 		);
 
 		buttonCloseCardToWidget
@@ -68,8 +68,7 @@ export default class CardFormWidget {
 			});
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	removeCardFormWidget(
+	static removeCardFormWidget(
 		listCardWidget: HTMLElement,
 		buttonAddCard: HTMLButtonElement
 	) {
@@ -82,10 +81,15 @@ export default class CardFormWidget {
 		cardFormWidget?.remove();
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	addCardEvent(cards: HTMLElement, inputField: HTMLTextAreaElement | null) {
+	static addCardEvent(
+		listCardWidget: HTMLElement,
+		buttonAddCard: HTMLButtonElement,
+		cards: HTMLElement,
+		inputField: HTMLTextAreaElement | null
+	) {
 		return () => {
 			if (inputField) {
+				this.removeCardFormWidget(listCardWidget, buttonAddCard);
 				Card.addCard(cards, inputField.value);
 				Storage.save();
 				inputField.value = '';
