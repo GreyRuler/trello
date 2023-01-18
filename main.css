@@ -24,6 +24,8 @@
 .card-item {
 	margin: 10px 0;
 	padding: 0.35rem 0.75rem;
+	/*white-space: normal;*/
+	hyphens: auto;
 }
 
 .card-item.dragged {
