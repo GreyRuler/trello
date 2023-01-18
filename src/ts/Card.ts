@@ -8,9 +8,9 @@ export default class Card {
 		const btnCloseCard = document.createElement('div');
 
 		card.classList.add('card-item', 'card', 'flex-row', 'justify-content-between');
-		btnCloseCard.classList.add('btn', 'btn-close');
+		btnCloseCard.classList.add('btn', 'btn-close', 'd-none');
 		contentCard.classList.add('content-card');
-		contentCard.innerText = content;
+		card.innerText = content;
 
 		card.insertAdjacentElement(
 			'beforeend',
@@ -101,6 +101,14 @@ export default class Card {
 				document.addEventListener('mousemove', onMouseMove);
 				document.addEventListener('mouseup', onMouseUp);
 			}
+		});
+
+		card.addEventListener('mouseover', () => {
+			btnCloseCard.classList.remove('d-none');
+		});
+
+		card.addEventListener('mouseout', () => {
+			btnCloseCard.classList.add('d-none');
 		});
 	}
 }

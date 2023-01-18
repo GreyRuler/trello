@@ -16,8 +16,9 @@ export default class ListCardWidget {
 	constructor(container: HTMLElement) {
 		this.container = container;
 
+		// this.container.classList.add('grid');
 		this.widget = document.createElement('div');
-		this.widget.classList.add('col');
+		this.widget.classList.add('col-4');
 		this.container.insertAdjacentElement(
 			'beforeend',
 			this.widget
