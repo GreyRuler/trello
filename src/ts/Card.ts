@@ -6,26 +6,27 @@ export default class Card {
 		const card = document.createElement('div');
 		const cardHeader = document.createElement('div');
 		const cardBody = document.createElement('div');
-		const btnRemoveCard = document.createElement('div');
-		const optionCard = document.createElement('div');
+		const btnRemoveCard = document.createElement('button');
+		const optionCard = document.createElement('button');
 		const contentCard = document.createElement('p');
 
 		card.classList.add(
 			'card-item',
 			'card',
 			'position-relative',
-			// 'flex-row',
-			// 'justify-content-between',
 			'text-break',
 			'text-light'
 		);
 		cardHeader.classList.add(
 			'card-header',
 			'position-absolute',
-			'baby-color'
+			'baby-color',
+			'd-flex',
+			'justify-content-end'
 		);
 		cardBody.classList.add('card-body', 'mt-3');
-		btnRemoveCard.classList.add('btn', 'btn-close');
+		btnRemoveCard.classList.add('btn', 'svg-close-icon');
+		optionCard.classList.add('btn', 'svg-option-icon');
 
 		card.append(cardHeader, cardBody);
 		cardHeader.append(optionCard, btnRemoveCard);
@@ -34,7 +35,7 @@ export default class Card {
 		contentCard.innerText = content;
 
 		this.registerEventsCard(card);
-		this.registerEventsBtnRemoveCard(cardHeader, btnRemoveCard);
+		this.registerEventsBtnRemoveCard(card, btnRemoveCard);
 
 		return card;
 	}
@@ -63,10 +64,8 @@ export default class Card {
 			if (mouseUpCardItem) {
 				oldPlug?.remove();
 				if (card.offsetHeight / 2 > event.offsetY) {
-					// top
 					mouseUpCardItem.before(plug);
 				} else {
-					// bottom
 					mouseUpCardItem.after(plug);
 				}
 			} else if (!currentCard?.querySelector('#plug')) {
@@ -90,7 +89,7 @@ export default class Card {
 		};
 
 		card.addEventListener('mousedown', (event) => {
-			if (!(event.target as HTMLElement).classList.contains('btn-close')) {
+			if (!(event.target as HTMLElement).classList.contains('btn')) {
 				event.preventDefault();
 
 				card.style.width = `${card.offsetWidth}px`;
@@ -110,9 +109,9 @@ export default class Card {
 		});
 	}
 
-	static registerEventsBtnRemoveCard(cardHeader: HTMLElement, btnRemoveCard: HTMLElement) {
+	static registerEventsBtnRemoveCard(card: HTMLElement, btnRemoveCard: HTMLElement) {
 		btnRemoveCard.addEventListener('click', () => {
-			cardHeader.remove();
+			card.remove();
 			Storage.save();
 		});
 	}

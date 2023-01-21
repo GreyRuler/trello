@@ -7,14 +7,16 @@ export default class CardFormWidget {
 		<div id="cardFormWidget">
 			<textarea cols="30" rows="3" class="form-control mb-2"
 					  id="input-field"
-					  placeholder="Enter a title for this card..."></textarea>
-			<div class="d-flex align-items-center">
-				<button class="btn btn-success me-3"
+					  placeholder="Введите текст для этой задачи..."></textarea>
+			<div class="d-flex">
+				<button class="btn btn-success me-3 col"
 						id="add-card-to-widget" type="button">
-						Добавить задачу
+						<div class="svg-icon svg-add-icon filter-white"></div>
 				</button>
-				<div id="button-close-cardFormWidget"
-				 	 class="btn btn-close justify-content-between"></div>
+				<button id="button-close-cardFormWidget"
+				 	 class="btn btn-danger col">
+				 	 <div class="svg-icon svg-cancel-icon filter-white"></div>
+				</button>
 			</div>
 		</div>`;
 	}
@@ -57,13 +59,16 @@ export default class CardFormWidget {
 			CardFormWidget.selectorInputField
 		) as HTMLTextAreaElement;
 
+		inputField.focus();
+
 		buttonAddCardToWidget?.addEventListener(
 			'click',
 			this.cardEvent.call(this, listCardWidget, buttonAddCard, cards, inputField)
 		);
 
 		buttonCloseCardToWidget
-			?.addEventListener('click', () => {
+			?.addEventListener('click', (e) => {
+				e.preventDefault();
 				this.removeCardFormWidget(listCardWidget, buttonAddCard);
 			});
 	}
@@ -88,7 +93,7 @@ export default class CardFormWidget {
 		inputField: HTMLTextAreaElement | null
 	) {
 		return () => {
-			if (inputField) {
+			if (inputField?.value) {
 				this.removeCardFormWidget(listCardWidget, buttonAddCard);
 				cards.append(Card.card(inputField.value));
 				Storage.save();

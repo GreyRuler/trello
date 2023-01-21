@@ -27,8 +27,7 @@ p {
 #cards .card.dragged {
 	position: absolute;
 	z-index: 999;
-	pointer-events: none;
-	/*cursor: grabbing;*/
+	cursor: grabbing;
 }
 
 #plug {
@@ -45,9 +44,11 @@ p {
 
 .card-header {
 	width: 100%;
+	min-height: 20px;
 	max-height: 0;
 	transition: max-height 1s ease-out;
 	overflow: hidden;
+	padding: 0;
 }
 
 .card-header:hover {
@@ -59,7 +60,7 @@ p {
 	display: none;
 }
 
-.card-header:hover .btn-close {
+.card-header:hover .btn {
 	display: block;
 	animation: fadeInFromNone 1s ease-in-out;
 }
@@ -82,5 +83,44 @@ p {
 }
 
 #cards .card {
-	/*cursor: grab;*/
+	cursor: grab;
+}
+
+.filter-white {
+	filter: invert(100%) sepia(0%) saturate(7440%) hue-rotate(88deg) brightness(115%) contrast(104%);
+}
+
+.svg-icon {
+	height: 1.5rem;
+}
+
+.svg-add-icon {
+	background: url('../img/add-icon.svg') no-repeat center;
+	background-size: contain;
+}
+
+.svg-cancel-icon {
+	background: url('../img/cancel-icon.svg') no-repeat center;
+	background-size: contain;
+}
+
+.card-header .btn {
+	display: none;
+	width: 16px;
+	height: 16px;
+	box-sizing: content-box;
+}
+
+.svg-option-icon {
+	background: url('../img/more-icon.svg') no-repeat center;
+	background-size: contain;
+}
+
+.svg-close-icon {
+	background: url('../img/close-icon.svg') no-repeat center;
+	background-size: contain;
+}
+
+.card-header:hover .btn:hover {
+	background-color: rgba(0, 0, 0, 0.1);
 }
