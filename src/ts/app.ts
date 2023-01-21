@@ -7,8 +7,8 @@ const webApp1 = new ListCardWidget(app);
 const webApp2 = new ListCardWidget(app);
 const webApp3 = new ListCardWidget(app);
 
-webApp1.bindToDOM('TODO');
-webApp2.bindToDOM('IN PROGRESS');
-webApp3.bindToDOM('DONE');
+webApp1.bindToDOM('Выданная задача');
+webApp2.bindToDOM('В процессе');
+webApp3.bindToDOM('Выполнено');
 
 Storage.load();

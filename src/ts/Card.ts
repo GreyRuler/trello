@@ -2,86 +2,103 @@
 import Storage from './Storage';
 
 export default class Card {
-	static addCard(cards: HTMLElement, content: string) {
+	static card(content: string) {
 		const card = document.createElement('div');
-		const contentCard = document.createElement('div');
-		const btnCloseCard = document.createElement('div');
+		const cardHeader = document.createElement('div');
+		const cardBody = document.createElement('div');
+		const btnRemoveCard = document.createElement('div');
+		const optionCard = document.createElement('div');
+		const contentCard = document.createElement('p');
 
-		card.classList.add('card-item', 'card', 'flex-row', 'justify-content-between');
-		btnCloseCard.classList.add('btn', 'btn-close', 'd-none');
-		contentCard.classList.add('content-card');
-		card.innerText = content;
-
-		card.insertAdjacentElement(
-			'beforeend',
-			contentCard
+		card.classList.add(
+			'card-item',
+			'card',
+			'position-relative',
+			// 'flex-row',
+			// 'justify-content-between',
+			'text-break',
+			'text-light'
 		);
-		card.insertAdjacentElement(
-			'beforeend',
-			btnCloseCard
+		cardHeader.classList.add(
+			'card-header',
+			'position-absolute',
+			'baby-color'
 		);
+		cardBody.classList.add('card-body', 'mt-3');
+		btnRemoveCard.classList.add('btn', 'btn-close');
 
-		cards.insertAdjacentElement(
-			'beforeend',
-			card
-		);
+		card.append(cardHeader, cardBody);
+		cardHeader.append(optionCard, btnRemoveCard);
+		cardBody.append(contentCard);
 
-		btnCloseCard.addEventListener('click', () => {
-			card.remove();
-			Storage.save();
-		});
+		contentCard.innerText = content;
 
-		const moveAt = (clientX: number, clientY: number) => {
-			card.style.left = `${clientX - card.offsetWidth / 2}px`;
-			card.style.top = `${clientY - card.offsetHeight / 2}px`;
+		this.registerEventsCard(card);
+		this.registerEventsBtnRemoveCard(cardHeader, btnRemoveCard);
+
+		return card;
+	}
+
+	static registerEventsCard(card: HTMLElement) {
+		let shiftX = 0;
+		let shiftY = 0;
+
+		const moveAt = (pageX: number, pageY: number) => {
+			card.style.left = `${pageX - shiftX}px`;
+			card.style.top = `${pageY - shiftY}px`;
 		};
 
 		const onMouseMove = (event: MouseEvent) => {
 			const mouseUpItem = event.target as HTMLElement;
-			const oldPlug = document.getElementById('plug');
-
 			const currentCard = mouseUpItem.closest('.card.up');
+
+			const oldPlug = document.getElementById('plug');
 
 			const plug = document.createElement('div');
 			plug.id = 'plug';
-			plug.classList.add('card');
+			plug.classList.add('card', 'grey-color-bg');
 			plug.style.height = `${card.offsetHeight}px`;
-			if (currentCard) {
-				if (mouseUpItem.classList.contains('card-item')) {
-					oldPlug?.remove();
-					if (card.offsetHeight / 2 > event.offsetY) {
-						// top
-						mouseUpItem.insertAdjacentElement(
-							'beforebegin',
-							plug
-						);
-					} else {
-						// bottom
-						mouseUpItem.insertAdjacentElement(
-							'afterend',
-							plug
-						);
-					}
-				} else if (!currentCard.querySelector('#plug')) {
-					oldPlug?.remove();
-					mouseUpItem
-						?.closest('.card-body')
-						?.querySelector('#cards')
-						?.insertAdjacentElement(
-							'beforeend',
-							plug
-						);
-				}
-			} else {
+			// console.log(currentCard);
+			// if (currentCard) {
+			// console.log(mouseUpItem);
+			if (mouseUpItem.classList.contains('card-item')) {
 				oldPlug?.remove();
+				// console.log(card.offsetHeight / 2 > event.offsetY);
+				if (card.offsetHeight / 2 > event.offsetY) {
+					// top
+					mouseUpItem.insertAdjacentElement(
+						'beforebegin',
+						plug
+					);
+				} else {
+					// bottom
+					mouseUpItem.insertAdjacentElement(
+						'afterend',
+						plug
+					);
+				}
+			} else if (!currentCard?.querySelector('#plug')) {
+				oldPlug?.remove();
+				// @ts-ignore
+				mouseUpItem?.closest('.card-body')
+					?.querySelector('#cards')
+					?.insertAdjacentElement(
+						'beforeend',
+						plug
+					);
 			}
-			moveAt(event.clientX, event.clientY);
+			// } else {
+			// 	oldPlug?.remove();
+			// }
+
+			moveAt(event.pageX, event.pageY);
 		};
 
 		const onMouseUp = () => {
 			const oldPlug = document.getElementById('plug');
 			oldPlug?.replaceWith(card);
 			card.classList.remove('dragged', 'm-0');
+			card.classList.add('position-relative');
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp);
 			card.onmouseup = null;
@@ -89,26 +106,31 @@ export default class Card {
 			Storage.save();
 		};
 
-		card.addEventListener('mousedown', (e) => {
-			if (!(e.target as HTMLElement).classList.contains('btn-close')) {
-				e.preventDefault();
+		card.addEventListener('mousedown', (event) => {
+			if (!(event.target as HTMLElement).classList.contains('btn-close')) {
+				event.preventDefault();
 
 				card.style.width = `${card.offsetWidth}px`;
 				card.classList.add('dragged', 'm-0');
+				card.classList.remove('position-relative');
 
-				moveAt(e.clientX, e.clientY);
+				// TODO added plug to move card
+
+				shiftX = event.clientX - card.getBoundingClientRect().left;
+				shiftY = event.clientY - card.getBoundingClientRect().top;
+
+				moveAt(event.pageX, event.pageY);
 
 				document.addEventListener('mousemove', onMouseMove);
 				document.addEventListener('mouseup', onMouseUp);
 			}
 		});
+	}
 
-		card.addEventListener('mouseover', () => {
-			btnCloseCard.classList.remove('d-none');
-		});
-
-		card.addEventListener('mouseout', () => {
-			btnCloseCard.classList.add('d-none');
+	static registerEventsBtnRemoveCard(cardHeader: HTMLElement, btnRemoveCard: HTMLElement) {
+		btnRemoveCard.addEventListener('click', () => {
+			cardHeader.remove();
+			Storage.save();
 		});
 	}
 }

@@ -11,7 +11,7 @@ export default class CardFormWidget {
 			<div class="d-flex align-items-center">
 				<button class="btn btn-success me-3"
 						id="add-card-to-widget" type="button">
-						Add card
+						Добавить задачу
 				</button>
 				<div id="button-close-cardFormWidget"
 				 	 class="btn btn-close justify-content-between"></div>
@@ -59,7 +59,7 @@ export default class CardFormWidget {
 
 		buttonAddCardToWidget?.addEventListener(
 			'click',
-			this.addCardEvent.call(this, listCardWidget, buttonAddCard, cards, inputField)
+			this.cardEvent.call(this, listCardWidget, buttonAddCard, cards, inputField)
 		);
 
 		buttonCloseCardToWidget
@@ -81,7 +81,7 @@ export default class CardFormWidget {
 		cardFormWidget?.remove();
 	}
 
-	static addCardEvent(
+	static cardEvent(
 		listCardWidget: HTMLElement,
 		buttonAddCard: HTMLButtonElement,
 		cards: HTMLElement,
@@ -90,7 +90,7 @@ export default class CardFormWidget {
 		return () => {
 			if (inputField) {
 				this.removeCardFormWidget(listCardWidget, buttonAddCard);
-				Card.addCard(cards, inputField.value);
+				cards.append(Card.card(inputField.value));
 				Storage.save();
 				inputField.value = '';
 			}

@@ -12,8 +12,8 @@ export default class Storage {
 
 			const cards = document.querySelectorAll('#cards');
 			cards.forEach(function (card: Element, index) {
-				Array.from(storage[index]).forEach(function (content) {
-					Card.addCard(card as HTMLElement, content as string);
+				Array.from(storage[index]).forEach(function (content: string) {
+					card.append(Card.card(content));
 				});
 			});
 		}
@@ -21,16 +21,12 @@ export default class Storage {
 
 	static save() {
 		const cards = document.querySelectorAll('#cards');
-		// eslint-disable-next-line func-names
 		const localStorage = Array.from(cards).reduce(
-			// eslint-disable-next-line func-names
 			function (storage: INumberIndex, card: Element, index: number) {
 				const cardItems = card.querySelectorAll('.card-item');
 				storage[index] = Array.from(cardItems).reduce(
-					// eslint-disable-next-line func-names
 					function (accumulator: Array<string>, currentValue: Element) {
-						const contentCard = currentValue.querySelector('.content-card') as HTMLElement;
-						accumulator.push(contentCard.innerText);
+						accumulator.push((currentValue as HTMLElement).innerText);
 						return accumulator;
 					},
 					[]

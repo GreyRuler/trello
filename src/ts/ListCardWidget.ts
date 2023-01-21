@@ -16,7 +16,6 @@ export default class ListCardWidget {
 	constructor(container: HTMLElement) {
 		this.container = container;
 
-		// this.container.classList.add('grid');
 		this.widget = document.createElement('div');
 		this.widget.classList.add('col-4');
 		this.container.insertAdjacentElement(
@@ -28,10 +27,11 @@ export default class ListCardWidget {
 	static get markup() {
 		return `<div class="card up">
 			<div class="card-body" id="list-card-widget">
-				<h5 class="card-title" id="card-title"></h5>
+				<h5 class="card-title text-light" id="card-title"></h5>
 				<div id="cards"></div>
-				<button class="btn" id="add-card">
-					 \u{002B} Add another card
+				<button class="btn btn-warning baby-color w-100 border-0"
+				 		id="add-card" type="button">
+					 \u{002B} Добавить другую задачу
 				</button>
 			</div>
 		</div>`;
