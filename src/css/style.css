@@ -4,6 +4,10 @@
 	box-sizing: border-box;
 }
 
+body {
+	background-color: #343434;
+}
+
 p {
 	margin: 0;
 }
@@ -46,14 +50,14 @@ p {
 	width: 100%;
 	min-height: 20px;
 	max-height: 0;
-	transition: max-height 1s ease-out;
+	transition: max-height 2s ease-out;
 	overflow: hidden;
 	padding: 0;
 }
 
 .card-header:hover {
 	max-height: 500px;
-	transition: max-height 1s ease-in;
+	transition: max-height 2s ease-in;
 }
 
 .btn-close {
@@ -62,7 +66,7 @@ p {
 
 .card-header:hover .btn {
 	display: block;
-	animation: fadeInFromNone 1s ease-in-out;
+	animation: fadeInFromNone 2s ease-in-out;
 }
 
 @keyframes fadeInFromNone {
@@ -111,6 +115,10 @@ p {
 	box-sizing: content-box;
 }
 
+.card-header .btn:focus {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
 .svg-option-icon {
 	background: url('../img/more-icon.svg') no-repeat center;
 	background-size: contain;
@@ -123,4 +131,21 @@ p {
 
 .card-header:hover .btn:hover {
 	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+	color: white;
+	border-color: #343434;
+	background-color: rgb(65, 65, 65);
+}
+
+.form-control:focus.form-control::placeholder {
+	color: rgba(255, 255, 255, 0.53);
+}
+
+.form-control:focus {
+	color: white;
+	border-color: #343434;
+	box-shadow: none;
+	background-color: rgb(65, 65, 65);
 }

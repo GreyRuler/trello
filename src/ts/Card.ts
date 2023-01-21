@@ -60,7 +60,6 @@ export default class Card {
 			plug.id = 'plug';
 			plug.classList.add('card', 'grey-color-bg');
 			plug.style.height = `${card.offsetHeight}px`;
-
 			if (mouseUpCardItem) {
 				oldPlug?.remove();
 				if (card.offsetHeight / 2 > event.offsetY) {
