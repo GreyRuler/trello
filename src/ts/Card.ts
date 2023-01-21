@@ -50,6 +50,7 @@ export default class Card {
 
 		const onMouseMove = (event: MouseEvent) => {
 			const mouseUpItem = event.target as HTMLElement;
+			const mouseUpCardItem = mouseUpItem.closest('.card-item');
 			const currentCard = mouseUpItem.closest('.card.up');
 
 			const oldPlug = document.getElementById('plug');
@@ -58,38 +59,20 @@ export default class Card {
 			plug.id = 'plug';
 			plug.classList.add('card', 'grey-color-bg');
 			plug.style.height = `${card.offsetHeight}px`;
-			// console.log(currentCard);
-			// if (currentCard) {
-			// console.log(mouseUpItem);
-			if (mouseUpItem.classList.contains('card-item')) {
+
+			if (mouseUpCardItem) {
 				oldPlug?.remove();
-				// console.log(card.offsetHeight / 2 > event.offsetY);
 				if (card.offsetHeight / 2 > event.offsetY) {
 					// top
-					mouseUpItem.insertAdjacentElement(
-						'beforebegin',
-						plug
-					);
+					mouseUpCardItem.before(plug);
 				} else {
 					// bottom
-					mouseUpItem.insertAdjacentElement(
-						'afterend',
-						plug
-					);
+					mouseUpCardItem.after(plug);
 				}
 			} else if (!currentCard?.querySelector('#plug')) {
 				oldPlug?.remove();
-				// @ts-ignore
-				mouseUpItem?.closest('.card-body')
-					?.querySelector('#cards')
-					?.insertAdjacentElement(
-						'beforeend',
-						plug
-					);
+				currentCard?.querySelector('#cards')?.append(plug);
 			}
-			// } else {
-			// 	oldPlug?.remove();
-			// }
 
 			moveAt(event.pageX, event.pageY);
 		};

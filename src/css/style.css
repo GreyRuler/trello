@@ -27,7 +27,8 @@ p {
 #cards .card.dragged {
 	position: absolute;
 	z-index: 999;
-	cursor: grabbing;
+	pointer-events: none;
+	/*cursor: grabbing;*/
 }
 
 #plug {
@@ -81,5 +82,5 @@ p {
 }
 
 #cards .card {
-	cursor: grab;
+	/*cursor: grab;*/
 }
