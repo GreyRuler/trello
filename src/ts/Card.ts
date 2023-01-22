@@ -80,6 +80,7 @@ export default class Card {
 			oldPlug?.replaceWith(card);
 			card.classList.remove('dragged', 'm-0');
 			card.classList.add('position-relative');
+			document.body.style.cursor = 'default';
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp);
 			card.onmouseup = null;
@@ -95,7 +96,7 @@ export default class Card {
 				card.classList.add('dragged', 'm-0');
 				card.classList.remove('position-relative');
 
-				// TODO added plug to move card
+				document.body.style.cursor = 'grabbing';
 
 				shiftX = event.clientX - card.getBoundingClientRect().left;
 				shiftY = event.clientY - card.getBoundingClientRect().top;
