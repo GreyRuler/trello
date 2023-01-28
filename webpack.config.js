@@ -45,6 +45,10 @@ module.exports = {
 				type: 'asset/resource',
 			},
 			// {
+			// 	test: /\.node$/,
+			// 	use: 'node-loader',
+			// },
+			// {
 			// 	test: /\.svg$/i,
 			// 	use: {
 			// 		loader: 'url-loader',
@@ -76,4 +80,5 @@ module.exports = {
 	resolve: {
 		extensions: ['.ts', '.js', '.json'],
 	},
+	// target: 'electron-main',
 };

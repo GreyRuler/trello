@@ -15,7 +15,11 @@
 		"show:dist": "live-server dist",
 		"build tsc": "tsc",
 		"watch": "tsc -w",
-		"deploy": "gh-pages -d dist"
+		"deploy": "gh-pages -d dist",
+		"package": "electron-packager .",
+		"electron": "electron .",
+		"start:electron": "npm run build && electron ./dist/main.js",
+		"rebuild": "./node_modules/.bin/electron-rebuild"
 	},
 	"repository": {
 		"type": "git"
@@ -30,12 +34,16 @@
 		"@jest/globals": "^29.0.3",
 		"@types/bootstrap": "^5.2.6",
 		"@types/jest": "^29.1.2",
+		"@types/jsdom": "^20.0.1",
 		"@typescript-eslint/eslint-plugin": "^5.39.0",
 		"@typescript-eslint/parser": "^5.39.0",
 		"babel-eslint": "^10.1.0",
 		"babel-jest": "^29.0.3",
 		"babel-loader": "^8.2.5",
+		"canvas-loader": "^0.0.1",
 		"css-loader": "^6.7.1",
+		"electron-packager": "^17.1.1",
+		"electron-rebuild": "^3.2.9",
 		"eslint": "^8.25.0",
 		"eslint-config-airbnb-typescript": "^17.0.0",
 		"eslint-plugin-import": "^2.26.0",
@@ -58,6 +66,12 @@
 	},
 	"dependencies": {
 		"bootstrap": "^5.2.3",
-		"core-js": "^3.25.2"
+		"bufferutil": "^4.0.7",
+		"canvas": "^2.11.0",
+		"core-js": "^3.25.2",
+		"electron": "^22.1.0",
+		"jsdom": "^21.1.0",
+		"node-loader": "^2.0.0",
+		"utf-8-validate": "^5.0.10"
 	}
 }

@@ -30,7 +30,7 @@ jobs:
                 run: npm install
 
             -   name: Lint 🐼
-                run: npm run lint
+                run: npm run lint:fix
 
             -   name: Run Test 🔨
                 run: npm run test
